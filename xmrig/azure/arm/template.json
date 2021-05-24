@@ -14,10 +14,6 @@
             "defaultValue": 1,
             "type": "Int"
         },
-        "VMs_F8": {
-            "defaultValue": 1,
-            "type": "Int"
-        },
         "user_wallet": {
             "defaultValue": "45fuUrFP8wXNhL6yw5Q8nnT5PZxT9qXuEDTPExtG38a6f7kweFVxij5aY4zXe6k6hYi7Uf63QSCMN1XCo9rQrwwUGJZwGSg",
             "type": "string"
@@ -142,59 +138,6 @@
                     "fixedScale": {
                         "targetDedicatedNodes": 0,
                         "targetLowPriorityNodes": "[parameters('VMs_F4')]",
-                        "resizeTimeout": "PT15M"
-                    }
-                },
-                "startTask": {
-                    "commandLine": "[variables('commandLine')]",
-                    "userIdentity": {
-                        "autoUser": {
-                            "scope": "Task",
-                            "elevationLevel": "Admin"
-                        }
-                    },
-                    "maxTaskRetryCount": 0,
-                    "waitForSuccess": true
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Batch/batchAccounts/pools",
-            "apiVersion": "2021-01-01",
-            "name": "[concat(parameters('batchAccounts_batches_name'), '/F8')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Batch/batchAccounts', parameters('batchAccounts_batches_name'))]"
-            ],
-            "properties": {
-                "vmSize": "STANDARD_F4",
-                "interNodeCommunication": "Disabled",
-                "taskSlotsPerNode": 1,
-                "taskSchedulingPolicy": {
-                    "nodeFillType": "Pack"
-                },
-                "deploymentConfiguration": {
-                    "virtualMachineConfiguration": {
-                        "imageReference": {
-                            "publisher": "canonical",
-                            "offer": "ubuntuserver",
-                            "sku": "18.04-lts",
-                            "version": "latest"
-                        },
-                        "nodeAgentSkuId": "batch.node.ubuntu 18.04",
-                        "nodePlacementConfiguration": {
-                            "policy": "Regional"
-                        }
-                    }
-                },
-                "networkConfiguration": {
-                    "publicIPAddressConfiguration": {
-                        "provision": "BatchManaged"
-                    }
-                },
-                "scaleSettings": {
-                    "fixedScale": {
-                        "targetDedicatedNodes": 0,
-                        "targetLowPriorityNodes": "[parameters('VMs_F8')]",
                         "resizeTimeout": "PT15M"
                     }
                 },

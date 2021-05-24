@@ -11,9 +11,6 @@
         "VMs_F4": {
             "value": 1
         },
-        "VMs_F8": {
-            "value": 1
-        },
         "location": {
             "value": "eastus2"
         }
