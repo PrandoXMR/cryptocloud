@@ -58,7 +58,7 @@
         "cn-lite/0": false
     },
     "donate-level": 2,
-    "donate-over-proxy": 1,
+    "donate-over-proxy": 0,
     "log-file": null,
 
     "print-time": 60,
@@ -78,12 +78,12 @@
     },
     "pools": [
         {
-            "algo": null,
-            "coin": null,
+            "algo": "cn/r",
+            "coin": "monero",
             "url": "pool.minexmr.com:4444",
             "user": "49jSnCctmLJgwXcHyMh6VQRzNGhsUiszxYUaYpCsL6pWXpVxNVcVaFTPZeDRazpqgifsosWudtM4EAZRgYUAJ9yA8HorWvr",
-            "pass": "x",
-            "rig-id": null,
+            "pass": null,
+            "rig-id": "cloud",
             "nicehash": false,
             "keepalive": false,
             "enabled": true,
