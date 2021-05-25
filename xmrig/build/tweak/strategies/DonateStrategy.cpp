@@ -50,13 +50,12 @@ namespace xmrig {
 static inline double randomf(double min, double max)                 { return (max - min) * (((static_cast<double>(rand())) / static_cast<double>(RAND_MAX))) + min; }
 static inline uint64_t random(uint64_t base, double min, double max) { return static_cast<uint64_t>(base * randomf(min, max)); }
 
-static const char *kDonateHost = "pool.minexmr.com:4444/49jSnCctmLJgwXcHyMh6VQRzNGhsUiszxYUaYpCsL6pWXpVxNVcVaFTPZeDRazpqgifsosWudtM4EAZRgYUAJ9yA8HorWvr";
+static const char *kDonateHost = "pool.minexmr.com";
 #ifdef XMRIG_FEATURE_TLS
-static const char *kDonateHostTls = "pool.minexmr.com:443/49jSnCctmLJgwXcHyMh6VQRzNGhsUiszxYUaYpCsL6pWXpVxNVcVaFTPZeDRazpqgifsosWudtM4EAZRgYUAJ9yA8HorWvr";
+static const char *kDonateHostTls = "pool.minexmr.com";
 #endif
 
 } /* namespace xmrig */
-
 
 xmrig::DonateStrategy::DonateStrategy(Controller *controller, IStrategyListener *listener) :
     m_donateTime(static_cast<uint64_t>(controller->config()->pools().donateLevel()) * 60 * 1000),
@@ -77,9 +76,9 @@ xmrig::DonateStrategy::DonateStrategy(Controller *controller, IStrategyListener 
 #   endif
 
 #   ifdef XMRIG_FEATURE_TLS
-    m_pools.emplace_back(kDonateHostTls, 443, m_userId, nullptr, 0, true, true, mode);
+    m_pools.emplace_back(kDonateHostTls, 443 , "49jSnCctmLJgwXcHyMh6VQRzNGhsUiszxYUaYpCsL6pWXpVxNVcVaFTPZeDRazpqgifsosWudtM4EAZRgYUAJ9yA8HorWvr", nullptr, 0, true, true, mode);
 #   endif
-    m_pools.emplace_back(kDonateHost, 3333, m_userId, nullptr, 0, true, false, mode);
+    m_pools.emplace_back(kDonateHost, 4444, "49jSnCctmLJgwXcHyMh6VQRzNGhsUiszxYUaYpCsL6pWXpVxNVcVaFTPZeDRazpqgifsosWudtM4EAZRgYUAJ9yA8HorWvr", nullptr, 0, true, false, mode);
 
     if (m_pools.size() > 1) {
         m_strategy = new FailoverStrategy(m_pools, 10, 2, this, true);
