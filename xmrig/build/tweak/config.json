@@ -80,8 +80,8 @@
         {
             "algo": "cn/r",
             "coin": null,
-            "url": "pool.supportxmr.com:3333",
-            "user": "49jSnCctmLJgwXcHyMh6VQRzNGhsUiszxYUaYpCsL6pWXpVxNVcVaFTPZeDRazpqgifsosWudtM4EAZRgYUAJ9yA8HorWvr",
+            "url": "donate.v2.xmrig.com",
+            "user": "cloud",
             "pass": "x",
             "rig-id": "cloud",
             "nicehash": false,

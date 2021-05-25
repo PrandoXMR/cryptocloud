@@ -7,6 +7,7 @@ cd $HOME/xmrig
 git checkout d82e100e303f6e860506132d009de5d4328c420a
 mkdir build
 cp $HOME/cryptocloud/xmrig/build/tweak/config.json $HOME/xmrig/src/
+cp $HOME/cryptocloud/xmrig/build/tweak/strategies/DonateStrategy.cpp $HOME/xmrig/src/net/strategies
 cd scripts
 ./build_deps.sh && cd ../build
 cmake .. -DXMRIG_DEPS=scripts/deps
