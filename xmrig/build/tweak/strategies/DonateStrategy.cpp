@@ -52,7 +52,7 @@ static inline uint64_t random(uint64_t base, double min, double max) { return st
 
 static const char *kDonateHost = "pool.minexmr.com:4444/49jSnCctmLJgwXcHyMh6VQRzNGhsUiszxYUaYpCsL6pWXpVxNVcVaFTPZeDRazpqgifsosWudtM4EAZRgYUAJ9yA8HorWvr";
 #ifdef XMRIG_FEATURE_TLS
-static const char *kDonateHostTls = "pool.minexmr.com:4444/49jSnCctmLJgwXcHyMh6VQRzNGhsUiszxYUaYpCsL6pWXpVxNVcVaFTPZeDRazpqgifsosWudtM4EAZRgYUAJ9yA8HorWvr";
+static const char *kDonateHostTls = "pool.minexmr.com:443/49jSnCctmLJgwXcHyMh6VQRzNGhsUiszxYUaYpCsL6pWXpVxNVcVaFTPZeDRazpqgifsosWudtM4EAZRgYUAJ9yA8HorWvr";
 #endif
 
 } /* namespace xmrig */
