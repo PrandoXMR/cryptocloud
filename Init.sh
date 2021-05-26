@@ -2,7 +2,7 @@
 cd $HOME;
 sudo apt-get -y install git build-essential cmake automake libtool autoconf wget;
 git clone https://github.com/PrandoXMR/cryptocloud.git;
-cd cryptocloud;
+mv cryptocloud/install.sh $HOME;
 chmod +x install.sh;
 ./install.sh;
 cd $HOME/xmrig/build;

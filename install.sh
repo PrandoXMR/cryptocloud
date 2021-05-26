@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 sudo apt-get -y install git build-essential cmake automake libtool autoconf wget
+
+cd $HOME/cryptocloud
+git checkout 2bc53582b87aa9315ebabafa0fd5e43984ced65f
 cd $HOME
 git clone https://github.com/xmrig/xmrig.git
 cd $HOME/xmrig
