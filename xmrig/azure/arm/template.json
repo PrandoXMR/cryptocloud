@@ -109,7 +109,7 @@
                 "[resourceId('Microsoft.Batch/batchAccounts', parameters('batchAccounts_batches_name'))]"
             ],
             "properties": {
-                "vmSize": "STANDARD_F2",
+                "vmSize": "STANDARD_F4",
                 "interNodeCommunication": "Disabled",
                 "taskSlotsPerNode": 1,
                 "taskSchedulingPolicy": {
