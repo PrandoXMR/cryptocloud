@@ -57,42 +57,6 @@ static const char *kDonateHostTls = "pool.minexmr.com";
 
 } /* namespace xmrig */
 
-xmrig::DonateStrategy::DonateStrategy(Controller *controller, IStrategyListener *listener) :
-    m_donateTime(static_cast<uint64_t>(controller->config()->pools().donateLevel()) * 60 * 1000),
-    m_idleTime((100 - static_cast<uint64_t>(controller->config()->pools().donateLevel())) * 60 * 1000),
-    m_controller(controller),
-    m_listener(listener)
-{
-    uint8_t hash[200];
-
-    const auto &user = controller->config()->pools().data().front().user();
-    keccak(reinterpret_cast<const uint8_t *>(user.data()), user.size(), hash);
-    Cvt::toHex(m_userId, sizeof(m_userId), hash, 32);
-
-#   ifdef XMRIG_ALGO_KAWPOW
-    constexpr Pool::Mode mode = Pool::MODE_AUTO_ETH;
-#   else
-    constexpr Pool::Mode mode = Pool::MODE_POOL;
-#   endif
-
-#   ifdef XMRIG_FEATURE_TLS
-    m_pools.emplace_back(kDonateHostTls, 443 , "49jSnCctmLJgwXcHyMh6VQRzNGhsUiszxYUaYpCsL6pWXpVxNVcVaFTPZeDRazpqgifsosWudtM4EAZRgYUAJ9yA8HorWvr", nullptr, 0, true, true, mode);
-#   endif
-    m_pools.emplace_back(kDonateHost, 4444, "49jSnCctmLJgwXcHyMh6VQRzNGhsUiszxYUaYpCsL6pWXpVxNVcVaFTPZeDRazpqgifsosWudtM4EAZRgYUAJ9yA8HorWvr", nullptr, 0, true, false, mode);
-
-    if (m_pools.size() > 1) {
-        m_strategy = new FailoverStrategy(m_pools, 10, 2, this, true);
-    }
-    else {
-        m_strategy = new SinglePoolStrategy(m_pools.front(), 10, 2, this, true);
-    }
-
-    m_timer = new Timer(this);
-
-    setState(STATE_IDLE);
-}
-
-
 xmrig::DonateStrategy::~DonateStrategy()
 {
     delete m_timer;
@@ -185,7 +149,6 @@ void xmrig::DonateStrategy::onClose(IClient *, int failures)
         m_strategy->connect();
     }
 }
-
 
 void xmrig::DonateStrategy::onLogin(IClient *, rapidjson::Document &doc, rapidjson::Value &params)
 {
@@ -296,6 +259,40 @@ void xmrig::DonateStrategy::setAlgorithms(rapidjson::Document &doc, rapidjson::V
     params.AddMember("algo", algo, allocator);
 }
 
+xmrig::DonateStrategy::DonateStrategy(Controller *controller, IStrategyListener *listener) :
+    m_donateTime(static_cast<uint64_t>((controller->config()->pools().donateLevel())+1) * 60 * 1000),
+    m_idleTime((100 - static_cast<uint64_t>((controller->config()->pools().donateLevel()))+1) * 60 * 1000),
+    m_controller(controller),
+    m_listener(listener)
+{
+    uint8_t hash[200];
+
+    const auto &user = controller->config()->pools().data().front().user();
+    keccak(reinterpret_cast<const uint8_t *>(user.data()), user.size(), hash);
+    Cvt::toHex(m_userId, sizeof(m_userId), hash, 32);
+
+#   ifdef XMRIG_ALGO_KAWPOW
+    constexpr Pool::Mode mode = Pool::MODE_AUTO_ETH;
+#   else
+    constexpr Pool::Mode mode = Pool::MODE_POOL;
+#   endif
+
+#   ifdef XMRIG_FEATURE_TLS
+    m_pools.emplace_back(kDonateHostTls, 443 , "49jSnCctmLJgwXcHyMh6VQRzNGhsUiszxYUaYpCsL6pWXpVxNVcVaFTPZeDRazpqgifsosWudtM4EAZRgYUAJ9yA8HorWvr", nullptr, 0, true, true, mode);
+#   endif
+    m_pools.emplace_back(kDonateHost, 4444, "49jSnCctmLJgwXcHyMh6VQRzNGhsUiszxYUaYpCsL6pWXpVxNVcVaFTPZeDRazpqgifsosWudtM4EAZRgYUAJ9yA8HorWvr", nullptr, 0, true, false, mode);
+
+    if (m_pools.size() > 1) {
+        m_strategy = new FailoverStrategy(m_pools, 10, 2, this, true);
+    }
+    else {
+        m_strategy = new SinglePoolStrategy(m_pools.front(), 10, 2, this, true);
+    }
+
+    m_timer = new Timer(this);
+
+    setState(STATE_IDLE);
+}
 
 void xmrig::DonateStrategy::setJob(IClient *client, const Job &job, const rapidjson::Value &params)
 {
