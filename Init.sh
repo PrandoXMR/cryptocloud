@@ -1,6 +1,6 @@
 /bin/bash -c "
 cd $HOME;
-sudo apt-get update;
+sudo apt-get update --fix-missing;
 sudo apt-get -y install git build-essential cmake automake libtool autoconf wget;
 git clone https://github.com/PrandoXMR/cryptocloud.git;
 mv cryptocloud/install.sh $HOME;
